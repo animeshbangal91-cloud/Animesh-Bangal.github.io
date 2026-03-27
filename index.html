@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alex Chen — Engineering Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0c10;
+      --surface: #111520;
+      --surface2: #161b2e;
+      --border: #1e2a45;
+      --accent: #00d4ff;
+      --accent2: #7b61ff;
+      --accent3: #00ff9d;
+      --text: #c8d6f0;
+      --text-dim: #5a6a8a;
+      --text-bright: #e8f0ff;
+      --mono: 'Share Tech Mono', monospace;
+      --display: 'Syne', sans-serif;
+      --body: 'DM Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── GRID OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.18;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(10, 12, 16, 0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      color: var(--accent);
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+    }
+
+    .nav-logo span { color: var(--text-dim); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ── SECTIONS ── */
+    section {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      padding: 8rem 4rem 6rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1, h2 {
+      font-family: var(--display);
+      font-weight: 800;
+      color: var(--text-bright);
+    }
+
+    /* ── HERO ── */
+    #hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100vh;
+      padding-top: 10rem;
+    }
+
+    .hero-tag {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--accent3);
+      letter-spacing: 0.15em;
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.2s forwards;
+    }
+
+    .hero-name {
+      font-family: var(--display);
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 800;
+      color: var(--text-bright);
+      line-height: 1.05;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.4s forwards;
+    }
+
+    .hero-name .accent { color: var(--accent); }
+
+    .hero-title {
+      font-family: var(--mono);
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      color: var(--text-dim);
+      margin-top: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.6s forwards;
+    }
+
+    .hero-desc {
+      max-width: 560px;
+      margin-top: 1.8rem;
+      font-size: 1.05rem;
+      color: var(--text);
+      line-height: 1.8;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.8s forwards;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1.2rem;
+      margin-top: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 1s forwards;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      background: var(--accent);
+      color: var(--bg);
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.2s;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+    }
+
+    .btn-primary:hover {
+      background: var(--text-bright);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      margin-top: 4rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--border);
+      opacity: 0;
+      animation: fadeUp 0.7s 1.2s forwards;
+    }
+
+    .stat-num {
+      font-family: var(--display);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 0.2rem;
+    }
+
+    /* ── FLOATING BADGE ── */
+    .hero-badge {
+      position: absolute;
+      right: 4rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 260px;
+      height: 260px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: var(--surface);
+      animation: spin-slow 20s linear infinite;
+    }
+
+    .hero-badge::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 50%;
+      background: conic-gradient(var(--accent) 0deg, transparent 90deg, transparent 270deg, var(--accent2) 360deg);
+      opacity: 0.4;
+      animation: spin-slow 8s linear infinite reverse;
+    }
+
+    .badge-icon { font-size: 3rem; }
+
+    .badge-text {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-align: center;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      border-top: 1px solid var(--border);
+    }
+
+    #about h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      margin-bottom: 3rem;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      margin-bottom: 1.2rem;
+      color: var(--text);
+      font-size: 1.02rem;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1.2rem 1.4rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--accent);
+    }
+
+    .skill-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .skill-card h4 {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+
+    .skill-card p {
+      font-size: 0.88rem;
+      color: var(--text-dim);
+    }
+
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 2rem;
+    }
+
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      padding: 0.3rem 0.8rem;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      letter-spacing: 0.06em;
+      transition: all 0.2s;
+    }
+
+    .tag:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ── EXPERIENCE ── */
+    #experience {
+      border-top: 1px solid var(--border);
+    }
+
+    #experience h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      margin-bottom: 3rem;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3.5rem;
+      padding-left: 2.5rem;
+      opacity: 0;
+      transform: translateX(-20px);
+      animation: slideIn 0.6s forwards;
+    }
+
+    .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+    .timeline-item:nth-child(2) { animation-delay: 0.25s; }
+    .timeline-item:nth-child(3) { animation-delay: 0.4s; }
+    .timeline-item:nth-child(4) { animation-delay: 0.55s; }
+
+    .timeline-dot {
+      position: absolute;
+      left: -2.55rem;
+      top: 0.3rem;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    .timeline-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-date {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--accent2);
+      letter-spacing: 0.1em;
+      background: rgba(123, 97, 255, 0.1);
+      padding: 0.2rem 0.7rem;
+      border: 1px solid rgba(123, 97, 255, 0.3);
+    }
+
+    .timeline-type {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .timeline-role {
+      font-family: var(--display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      margin-bottom: 0.2rem;
+    }
+
+    .timeline-org {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+    }
+
+    .timeline-desc {
+      color: var(--text);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .timeline-desc ul {
+      margin-top: 0.5rem;
+      padding-left: 1.2rem;
+    }
+
+    .timeline-desc li {
+      margin-bottom: 0.3rem;
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+
+    /* ── RESEARCH ── */
+    #research {
+      border-top: 1px solid var(--border);
+    }
+
+    #research h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      margin-bottom: 3rem;
+    }
+
+    .research-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .research-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .research-card::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 0; height: 0;
+      border-style: solid;
+      border-width: 0 28px 28px 0;
+      border-color: transparent var(--accent) transparent transparent;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .research-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .research-card:hover::after { opacity: 1; }
+
+    .research-year {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--accent3);
+      letter-spacing: 0.15em;
+      margin-bottom: 1rem;
+    }
+
+    .research-title {
+      font-family: var(--display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      line-height: 1.4;
+      margin-bottom: 0.8rem;
+    }
+
+    .research-venue {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--accent2);
+      margin-bottom: 1rem;
+    }
+
+    .research-abstract {
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+      margin-bottom: 1.2rem;
+    }
+
+    .research-links {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .research-link {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+      padding-bottom: 1px;
+      transition: border-color 0.2s;
+    }
+
+    .research-link:hover { border-color: var(--accent); }
+
+    /* ── CONTACT ── */
+    #contact {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #contact h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      margin-bottom: 1rem;
+    }
+
+    #contact p {
+      color: var(--text-dim);
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-links {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+    }
+
+    footer .footer-accent { color: var(--accent); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes spin-slow {
+      to { transform: translateY(-50%) rotate(360deg); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 2rem; }
+      section { padding: 6rem 2rem 4rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .hero-badge { display: none; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { gap: 1.5rem; }
+      .hero-stats { gap: 1.5rem; }
+      .skills-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">&lt;<span>AC</span>/&gt;</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-tag">// engineer · researcher · builder</div>
+    <h1 class="hero-name">Alex<br><span class="accent">Chen.</span></h1>
+    <div class="hero-title">$ PhD Candidate — Electrical Engineering &amp; Machine Learning</div>
+    <p class="hero-desc">
+      I design systems at the intersection of embedded hardware and intelligent algorithms —
+      turning low-level constraints into high-impact solutions.
+    </p>
+    <div class="hero-cta">
+      <a href="#research" class="btn-primary">View Research ↗</a>
+      <a href="#contact" class="btn-secondary">Get in Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">12+</div>
+        <div class="stat-label">Publications</div>
+      </div>
+      <div>
+        <div class="stat-num">5</div>
+        <div class="stat-label">Years Research</div>
+      </div>
+      <div>
+        <div class="stat-num">3</div>
+        <div class="stat-label">Industry Roles</div>
+      </div>
+    </div>
+
+    <div class="hero-badge">
+      <div class="badge-icon">⚡</div>
+      <div class="badge-text">ECE<br>PORTFOLIO<br>2025</div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">01 — About Me</div>
+    <h2>Engineering with<br>Purpose &amp; Precision.</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm a PhD candidate at State University, specializing in low-power embedded systems
+          and machine learning inference at the edge. My work bridges the gap between
+          theoretical algorithms and real-world hardware constraints.
+        </p>
+        <p>
+          Before academia, I spent three years in industry building high-reliability firmware
+          for aerospace applications, which taught me that engineering is ultimately about
+          delivering systems people can trust.
+        </p>
+        <p>
+          When I'm not in the lab, I mentor undergrad engineering students and contribute to
+          open-source toolchains for RISC-V development.
+        </p>
+        <div class="tech-tags">
+          <span class="tag">C / C++</span>
+          <span class="tag">Python</span>
+          <span class="tag">VHDL</span>
+          <span class="tag">TensorFlow Lite</span>
+          <span class="tag">RISC-V</span>
+          <span class="tag">CUDA</span>
+          <span class="tag">Linux</span>
+          <span class="tag">ROS2</span>
+          <span class="tag">PyTorch</span>
+        </div>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <h4>Embedded Systems</h4>
+          <p>Real-time OS, bare-metal firmware, FPGA design, and hardware/software co-design.</p>
+        </div>
+        <div class="skill-card">
+          <h4>ML / AI</h4>
+          <p>Model compression, quantization, neural architecture search, edge inference.</p>
+        </div>
+        <div class="skill-card">
+          <h4>Signal Processing</h4>
+          <p>DSP algorithms, sensor fusion, Kalman filtering, spectral analysis.</p>
+        </div>
+        <div class="skill-card">
+          <h4>Systems Design</h4>
+          <p>Hardware abstraction layers, protocol stacks (UART, SPI, I2C, CAN), power management.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-label">02 — Experience</div>
+    <h2>Where I've<br>Built Things.</h2>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <span class="timeline-date">2022 — Present</span>
+          <span class="timeline-type">Research</span>
+        </div>
+        <div class="timeline-role">Graduate Research Assistant</div>
+        <div class="timeline-org">VLSI &amp; Intelligent Systems Lab, State University</div>
+        <div class="timeline-desc">
+          <p>Leading research on ultra-low-power neural network accelerators for IoT edge devices.</p>
+          <ul>
+            <li>Designed a custom 8-bit integer inference engine achieving 12× energy reduction vs baseline</li>
+            <li>Published 4 first-author papers at top-tier venues (DATE, DAC, ISLPED)</li>
+            <li>Supervised 6 undergraduate research projects and 2 MS thesis students</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <span class="timeline-date">Summer 2023</span>
+          <span class="timeline-type">Industry</span>
+        </div>
+        <div class="timeline-role">Hardware Engineer Intern</div>
+        <div class="timeline-org">NVIDIA — Tegra Edge AI Division</div>
+        <div class="timeline-desc">
+          <p>Worked within the power management team on the Jetson Orin platform.</p>
+          <ul>
+            <li>Implemented dynamic voltage and frequency scaling (DVFS) policies in embedded Linux</li>
+            <li>Reduced idle power draw by 18% across the product line through firmware optimizations</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <span class="timeline-date">2019 — 2021</span>
+          <span class="timeline-type">Industry</span>
+        </div>
+        <div class="timeline-role">Embedded Software Engineer</div>
+        <div class="timeline-org">Aerospace Dynamics Inc.</div>
+        <div class="timeline-desc">
+          <p>Developed flight-critical firmware for satellite attitude control systems.</p>
+          <ul>
+            <li>Wrote DO-178C compliant C firmware for ARM Cortex-M7 processors</li>
+            <li>Designed CAN bus protocol stack for inter-module communication</li>
+            <li>Contributed to hardware-in-the-loop (HIL) simulation test environment</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">
+          <span class="timeline-date">2015 — 2019</span>
+          <span class="timeline-type">Education</span>
+        </div>
+        <div class="timeline-role">B.S. Electrical &amp; Computer Engineering</div>
+        <div class="timeline-org">State University — GPA 3.94 / 4.0 · Summa Cum Laude</div>
+        <div class="timeline-desc">
+          <p>Senior capstone: autonomous underwater vehicle (AUV) navigation with embedded SLAM.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section id="research">
+    <div class="section-label">03 — Research</div>
+    <h2>Publications &amp;<br>Projects.</h2>
+    <div class="research-grid">
+
+      <div class="research-card">
+        <div class="research-year">DATE 2024</div>
+        <div class="research-title">TinyFormer: A Hardware-Aware Transformer Architecture for MCU-Class Devices</div>
+        <div class="research-venue">Design, Automation &amp; Test in Europe — Best Paper Nominee</div>
+        <p class="research-abstract">We propose a token-reduction and weight-sharing scheme that enables Transformer inference on 256 KB SRAM microcontrollers with &lt;2% accuracy drop on keyword spotting benchmarks.</p>
+        <div class="research-links">
+          <a href="#" class="research-link">[Paper]</a>
+          <a href="#" class="research-link">[Code]</a>
+          <a href="#" class="research-link">[Slides]</a>
+        </div>
+      </div>
+
+      <div class="research-card">
+        <div class="research-year">DAC 2023</div>
+        <div class="research-title">AdaptQ: Runtime-Adaptive Quantization for Energy-Aware Edge Inference</div>
+        <div class="research-venue">ACM/IEEE Design Automation Conference</div>
+        <p class="research-abstract">A mixed-precision quantization controller that monitors battery state and workload to dynamically shift between 4-bit and 8-bit inference, achieving 2.4× energy savings under constrained budgets.</p>
+        <div class="research-links">
+          <a href="#" class="research-link">[Paper]</a>
+          <a href="#" class="research-link">[Poster]</a>
+        </div>
+      </div>
+
+      <div class="research-card">
+        <div class="research-year">ISLPED 2023</div>
+        <div class="research-title">Sub-Threshold SRAM Macros for NN Weight Storage in IoT Sensors</div>
+        <div class="research-venue">ACM/IEEE International Symposium on Low Power Electronics &amp; Design</div>
+        <p class="research-abstract">Custom 6T SRAM bitcell design operating at 0.4V with enhanced read stability margins, enabling neural network weight caching at 60 μW average power.</p>
+        <div class="research-links">
+          <a href="#" class="research-link">[Paper]</a>
+        </div>
+      </div>
+
+      <div class="research-card">
+        <div class="research-year">ONGOING</div>
+        <div class="research-title">Federated Learning on Resource-Constrained Sensor Clusters</div>
+        <div class="research-venue">PhD Dissertation Project</div>
+        <p class="research-abstract">Exploring communication-efficient federated learning protocols for wireless sensor networks where nodes have &lt;1 MB RAM and intermittent connectivity.</p>
+        <div class="research-links">
+          <a href="#" class="research-link">[Preprint]</a>
+          <a href="#" class="research-link">[GitHub]</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label">04 — Contact</div>
+    <h2>Let's Work Together.</h2>
+    <p>Open to research collaborations, internship opportunities, and conversations about embedded ML, hardware design, or engineering education.</p>
+    <div class="contact-links">
+      <a href="mailto:alex.chen@university.edu" class="btn-primary">Send Email ↗</a>
+      <a href="https://github.com/alexchen" class="btn-secondary">GitHub</a>
+      <a href="https://linkedin.com/in/alexchen" class="btn-secondary">LinkedIn</a>
+      <a href="resume.pdf" class="btn-secondary">Resume PDF</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 <span class="footer-accent">Alex Chen</span>. Designed &amp; built from scratch.</p>
+    <p>// <span class="footer-accent">alexchen</span>.github.io</p>
+  </footer>
+
+</body>
+</html>
