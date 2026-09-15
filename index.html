@@ -1333,6 +1333,34 @@
     }
 
     /* ── RESPONSIVE ── */
+    .mobile-menu-toggle {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      color: var(--text-bright);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      flex-shrink: 0;
+      box-shadow: 0 6px 20px rgba(17,24,39,0.06);
+    }
+    .mobile-menu-toggle span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      border-radius: 999px;
+      background: currentColor;
+      transition: transform 0.25s ease, opacity 0.2s ease;
+    }
+    .mobile-menu-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .mobile-menu-toggle.open span:nth-child(2) { opacity: 0; }
+    .mobile-menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
     @media (max-width: 1080px) {
       nav { padding: 1.1rem 2.5rem; }
       .nav-links { gap: 1.6rem; }
@@ -1941,22 +1969,80 @@
 
     @media (max-width: 900px) {
       .section-inner { padding: 6rem 1.35rem 4rem; }
+
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.75rem 0.85rem;
+      }
+
+      .mobile-menu-toggle { display: inline-flex; }
+
       .nav-right {
+        position: absolute;
+        top: calc(100% + 10px);
+        left: 0;
+        right: 0;
+        width: 100%;
+        display: none;
         flex-direction: column;
         align-items: stretch;
+        gap: 0.9rem;
+        padding: 0.9rem;
+        background: var(--navbg);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        box-shadow: var(--shadow-md);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        max-height: calc(100vh - 105px);
+        overflow-y: auto;
       }
+
+      .nav-right.open { display: flex; }
+
       .nav-links {
-        justify-content: flex-start;
-      }
-      .hero-stats {
+        width: 100%;
+        display: grid;
         grid-template-columns: 1fr 1fr;
+        gap: 0.45rem;
+        justify-content: stretch;
       }
-      .logo-signature {
-        font-size: 1.65rem;
+
+      .nav-links li { width: 100%; }
+      .nav-links a {
+        display: block;
+        width: 100%;
+        padding: 0.75rem 0.8rem;
+        border-radius: 12px;
+        background: var(--surface2);
+        border: 1px solid transparent;
       }
+      .nav-links a:hover,
+      .nav-links a.active {
+        border-color: var(--border);
+        background: var(--surface);
+      }
+
+      .nav-right .theme-toggle {
+        align-self: flex-end;
+        width: 42px;
+        height: 42px;
+      }
+
+      .hero-stats { grid-template-columns: 1fr 1fr; }
+      .logo-signature { font-size: 1.65rem; }
     }
 
     @media (max-width: 640px) {
+      .nav-links { grid-template-columns: 1fr; }
+      .logo-signature { font-size: 1.25rem; }
+      .logo-mark { width: 36px; height: 36px; }
+      nav { top: 8px; width: calc(100% - 0.75rem); }
+      .section-inner { padding-left: 1rem; padding-right: 1rem; }
+      #hero .section-inner { padding-top: 7.5rem; }
+      h2 { font-size: clamp(2.2rem, 12vw, 3.1rem); margin-bottom: 2rem; }
       .hero-stats {
         grid-template-columns: 1fr;
       }
@@ -2157,7 +2243,10 @@
   <!-- NAV -->
   <nav>
     <a href="#hero" class="nav-logo" aria-label="Animesh Bangal home"><span class="logo-mark om-mark" aria-hidden="true">ॐ</span><span class="logo-signature">Animesh Bangal</span></a>
-    <div class="nav-right">
+    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-right" id="primary-navigation">
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#experience">Experience</a></li>
@@ -3270,6 +3359,41 @@
       }
       field.appendChild(frag);
     })();
+
+    /* ── MOBILE NAVIGATION ── */
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const primaryNavigation = document.getElementById('primary-navigation');
+
+    function closeMobileMenu() {
+      if (!mobileMenuToggle || !primaryNavigation) return;
+      primaryNavigation.classList.remove('open');
+      mobileMenuToggle.classList.remove('open');
+      mobileMenuToggle.setAttribute('aria-expanded', 'false');
+      mobileMenuToggle.setAttribute('aria-label', 'Open navigation menu');
+    }
+
+    if (mobileMenuToggle && primaryNavigation) {
+      mobileMenuToggle.addEventListener('click', () => {
+        const isOpen = primaryNavigation.classList.toggle('open');
+        mobileMenuToggle.classList.toggle('open', isOpen);
+        mobileMenuToggle.setAttribute('aria-expanded', String(isOpen));
+        mobileMenuToggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+      });
+
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', closeMobileMenu);
+      });
+
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 900) closeMobileMenu();
+      });
+
+      document.addEventListener('click', (event) => {
+        if (window.innerWidth <= 900 && primaryNavigation.classList.contains('open') && !event.target.closest('nav')) {
+          closeMobileMenu();
+        }
+      });
+    }
 
     /* ── THEME TOGGLE ── */
     const themeToggle = document.getElementById('theme-toggle');
