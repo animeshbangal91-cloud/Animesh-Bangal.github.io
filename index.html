@@ -2199,6 +2199,10 @@
     .publication-bar:hover .publication-bar-arrow {
       transform: translate(3px, -3px);
     }
+    .publication-list {
+      display: grid;
+      gap: 1rem;
+    }
     @media (max-width: 640px) {
       .publication-bar {
         grid-template-columns: 1fr;
@@ -2293,8 +2297,8 @@
           <div class="stat-label">Lab Affiliations</div>
         </div>
         <div>
-          <div class="stat-num" data-count="2">0</div>
-          <div class="stat-label">Publications In Progress</div>
+          <div class="stat-num" data-count="4">0</div>
+          <div class="stat-label">ACC 2027 Submissions</div>
         </div>
         <div>
           <div class="stat-num" data-count="2">0</div>
@@ -2596,7 +2600,7 @@
     <div class="research-grid">
 
       <div class="research-card" data-modal="edmdc" role="button" tabindex="0" aria-label="Open EDMDc project details">
-        <div class="research-status">In Progress</div>
+        <div class="research-status">Submitted to ACC 2027</div>
         <div class="research-title">EDMDc-Based Predictive Control for Real-Time Drone Interception</div>
         <p class="research-desc">
           Applying Extended Dynamic Mode Decomposition with control (EDMDc) to learn a linear
@@ -2608,7 +2612,7 @@
       </div>
 
       <div class="research-card" data-modal="adaptive" role="button" tabindex="0" aria-label="Open adaptive control and input shaping project details">
-        <div class="research-status">In Progress</div>
+        <div class="research-status">Submitted to ACC 2027</div>
         <div class="research-title">Adaptive Control &amp; Input Shaping with Non-Zero Initial Conditions</div>
         <p class="research-desc">
           Investigating adaptive control behavior when the system begins away from the ideal zero-state condition,
@@ -2630,7 +2634,7 @@
       </div>
 
       <div class="research-card" data-modal="fixedwing" role="button" tabindex="0" aria-label="Open fixed-wing optimal control project details">
-        <div class="research-status">In Progress</div>
+        <div class="research-status">Submitted to ACC 2027</div>
         <div class="research-title">Optimal Control for Minimum-Energy Fixed-Wing Flight</div>
         <p class="research-desc">
           Formulating an optimal control problem to minimize battery energy consumption for a
@@ -2659,17 +2663,51 @@
   <!-- PUBLICATIONS -->
   <section id="publications">
   <div class="section-inner reveal">
-    <div class="section-label">04 — Publication</div>
-    <h2>Published Work.</h2>
-    <a class="publication-bar" href="https://repository.lsu.edu/cgi/viewcontent.cgi?article=1037&amp;context=lsu_control" target="_blank" rel="noopener">
-      <div class="publication-bar-index">01</div>
-      <div class="publication-bar-main">
-        <div class="pub-status">LSU Symposium on Control, Learning &amp; Intelligent Systems</div>
-        <div class="pub-title">Data-Driven Predictive Control for UAV Interception via Koopman-Based Lifting</div>
-        <div class="pub-meta">LSU Institutional Repository · View publication ↗</div>
+    <div class="section-label">04 — Publications</div>
+    <h2>Research Publications.</h2>
+    <div class="publication-list">
+
+      <a class="publication-bar" href="https://repository.lsu.edu/cgi/viewcontent.cgi?article=1037&amp;context=lsu_control" target="_blank" rel="noopener">
+        <div class="publication-bar-index">01</div>
+        <div class="publication-bar-main">
+          <div class="pub-status">Published at LSU Symposium · Submitted to ACC 2027</div>
+          <div class="pub-title">Data-Driven Predictive Control for UAV Interception via Koopman-Based Lifting</div>
+          <div class="pub-meta">Third Author · LSU Institutional Repository · View publication ↗</div>
+        </div>
+        <div class="publication-bar-arrow">↗</div>
+      </a>
+
+      <div class="publication-bar">
+        <div class="publication-bar-index">02</div>
+        <div class="publication-bar-main">
+          <div class="pub-status">Submitted to ACC 2027</div>
+          <div class="pub-title">Optimal Periodic Control</div>
+          <div class="pub-meta">Second Author · American Control Conference (ACC) 2027 submission</div>
+        </div>
+        <div class="publication-bar-arrow">•</div>
       </div>
-      <div class="publication-bar-arrow">↗</div>
-    </a>
+
+      <div class="publication-bar">
+        <div class="publication-bar-index">03</div>
+        <div class="publication-bar-main">
+          <div class="pub-status">Submitted to ACC 2027</div>
+          <div class="pub-title">Adaptive Nonzero-Initial-Condition Input Shaping with Online Modal Identification</div>
+          <div class="pub-meta">Third Author · American Control Conference (ACC) 2027 submission</div>
+        </div>
+        <div class="publication-bar-arrow">•</div>
+      </div>
+
+      <div class="publication-bar">
+        <div class="publication-bar-index">04</div>
+        <div class="publication-bar-main">
+          <div class="pub-status">Submitted to ACC 2027</div>
+          <div class="pub-title">Closed-Form Development for Robust Nonzero-Initial-Condition Input Shaping</div>
+          <div class="pub-meta">Third Author · My contribution: MATLAB simulations for spring-mass and gantry-crane systems</div>
+        </div>
+        <div class="publication-bar-arrow">•</div>
+      </div>
+
+    </div>
   </div>
   </section>
 
@@ -3047,8 +3085,8 @@
       },
 
       edmdc: {
-        tag: "Research · In Progress",
-        date: "In Progress",
+        tag: "Research · Submitted to ACC 2027",
+        date: "Submitted to ACC 2027",
         title: "EDMDc Predictive Control for Drone Interception",
         subtitle: "Data-driven Koopman modeling for real-time aerial interception",
         html: `
@@ -3076,7 +3114,7 @@
           </ul>
 
           <div class="modal-section-title">Status</div>
-          <p>Research is currently in progress, with ongoing development and evaluation of the Koopman-based predictive-control approach.</p>
+          <p>The associated paper has been <strong>submitted to the American Control Conference (ACC) 2027</strong>.</p>
 
           <div class="modal-section-title">Stack</div>
           <div class="modal-stack">
@@ -3087,8 +3125,8 @@
       },
 
       adaptive: {
-        tag: "Research · In Progress",
-        date: "Active",
+        tag: "Research · Submitted to ACC 2027",
+        date: "Submitted to ACC 2027",
         title: "Adaptive Control & Input Shaping with Non-Zero Initial Conditions",
         subtitle: "Robust control behavior beyond ideal zero-state assumptions",
         html: `
@@ -3102,6 +3140,9 @@
             <li>Applying <strong>input-shaping concepts</strong> to commanded motion to suppress residual vibration after a maneuver.</li>
             <li>Connecting simulation results to hardware-oriented controls work where systems rarely begin from perfectly zeroed conditions.</li>
           </ul>
+
+          <div class="modal-section-title">Status</div>
+          <p>The associated paper has been <strong>submitted to the American Control Conference (ACC) 2027</strong>.</p>
 
           <div class="modal-section-title">Stack</div>
           <div class="modal-stack">
@@ -3139,8 +3180,8 @@
       },
 
       fixedwing: {
-        tag: "Research · In Progress",
-        date: "Active",
+        tag: "Research · Submitted to ACC 2027",
+        date: "Submitted to ACC 2027",
         title: "Optimal Control for Minimum-Energy Fixed-Wing Flight",
         subtitle: "Beating steady cruise on energy, not just speed",
         html: `
@@ -3175,8 +3216,7 @@
           </ul>
 
           <div class="modal-section-title">Status</div>
-          <p>Actively formulating and solving the optimal control problem; benchmarking against the
-          steady-cruise baseline.</p>
+          <p>The associated <strong>Optimal Periodic Control</strong> paper has been <strong>submitted to the American Control Conference (ACC) 2027</strong>.</p>
 
           <div class="modal-section-title">Stack</div>
           <div class="modal-stack">
