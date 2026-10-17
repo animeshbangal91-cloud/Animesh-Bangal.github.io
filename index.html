@@ -2254,6 +2254,7 @@
       <ul class="nav-links">
         <li><a href="#hero">Home</a></li>
         <li><a href="#experience">Experience</a></li>
+        <li><a href="#research">Research Projects</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#publications">Publications</a></li>
         <li><a href="Resume_Animesh_Bangal.pdf" target="_blank" rel="noopener noreferrer">Resume</a></li>
@@ -2618,6 +2619,17 @@
           Investigating adaptive control behavior when the system begins away from the ideal zero-state condition,
           together with input-shaping methods for reducing residual vibration during commanded motion. The work
           connects controller robustness with vibration-aware trajectory commands for more realistic dynamic systems.
+        </p>
+        <span class="click-hint">Explore the project</span>
+      </div>
+
+      <div class="research-card" data-modal="closedform" role="button" tabindex="0" aria-label="Open closed-form robust nonzero-initial-condition input shaping project details">
+        <div class="research-status">Submitted to ACC 2027</div>
+        <div class="research-title">Closed-Form Robust Nonzero-Initial-Condition Input Shaping</div>
+        <p class="research-desc">
+          Developing and validating closed-form frequency-robust input shapers for flexible systems that begin with
+          nonzero displacement and velocity. The work covers an undamped spring-mass model and a velocity-controlled
+          gantry crane, with robustness evaluated under natural-frequency uncertainty.
         </p>
         <span class="click-hint">Explore the project</span>
       </div>
@@ -3148,6 +3160,41 @@
           <div class="modal-stack">
             <span>Adaptive Control</span><span>Input Shaping</span><span>Non-Zero Initial Conditions</span>
             <span>MATLAB</span><span>Simulink</span><span>Dynamic Systems</span>
+          </div>
+        `
+      },
+
+      closedform: {
+        tag: "Research · Submitted to ACC 2027",
+        date: "Submitted to ACC 2027",
+        title: "Closed-Form Development for Robust Nonzero-Initial-Condition Input Shaping",
+        subtitle: "Closed-form robust input shaping for spring-mass and gantry-crane systems",
+        html: `
+          <div class="modal-section-title">Overview</div>
+          <p>This research develops <strong>closed-form first-order frequency-robust input shapers</strong> for undamped flexible systems that begin with <strong>nonzero initial conditions</strong>. The formulation addresses both an undamped second-order spring-mass system and a velocity-controlled gantry crane, including cases with simultaneous nonzero displacement and velocity.</p>
+
+          <div class="modal-section-title">Approach</div>
+          <ul class="modal-list">
+            <li>Derive closed-form switching amplitudes and timing relationships that cancel residual vibration while reducing sensitivity to natural-frequency error.</li>
+            <li>Evaluate robust three-switch and five-switch shaping strategies for nonzero-initial-condition motion.</li>
+            <li>Extend the formulation from the second-order spring-mass model to a <strong>velocity-controlled gantry crane</strong>.</li>
+            <li>Compare robust and nonrobust shaping performance through numerical simulations and residual-vibration metrics.</li>
+          </ul>
+
+          <div class="modal-section-title">My Contribution</div>
+          <ul class="modal-list">
+            <li>Developed and ran <strong>MATLAB simulations for the spring-mass system</strong> to evaluate the closed-form nonzero-initial-condition input shapers.</li>
+            <li>Developed and ran <strong>MATLAB simulations for the gantry-crane system</strong>, comparing robust and nonrobust shapers under nominal and perturbed natural-frequency conditions.</li>
+            <li>Generated simulation results used to assess residual vibration and robustness of the proposed shaping methods.</li>
+          </ul>
+
+          <div class="modal-section-title">Status</div>
+          <p>The paper <strong>Closed-Form Development for Robust Nonzero-Initial-Condition Input Shaping</strong> has been <strong>submitted to the American Control Conference (ACC) 2027</strong>.</p>
+
+          <div class="modal-section-title">Stack</div>
+          <div class="modal-stack">
+            <span>MATLAB</span><span>Input Shaping</span><span>Nonzero Initial Conditions</span>
+            <span>Spring-Mass System</span><span>Gantry Crane</span><span>Robust Control</span>
           </div>
         `
       },
